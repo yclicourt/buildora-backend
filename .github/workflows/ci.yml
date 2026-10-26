@@ -49,4 +49,4 @@ jobs:
       - run: pnpm build
       # Todavía no hay tests en el repo; sin este flag jest falla
       # con "No tests found" y el CI iría en rojo sin motivo.
-      - run: pnpm test -- --passWithNoTests
+      - run: pnpm exec jest --passWithNoTests
