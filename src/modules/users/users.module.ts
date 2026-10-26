@@ -7,8 +7,10 @@ import { ListUsersUseCase } from './application/uses-cases/list-users.use-case';
 import { UpdateUserUseCase } from './application/uses-cases/update-user.use-case';
 import { USER_REPOSITORY } from './domain/ports/user.repository';
 import { PrismaUserRepository } from './infrastructure/persistence/prisma-user.repository';
+import { PrismaModule } from '@/shared/database/prisma.module';
 
 @Module({
+  imports: [PrismaModule],
   controllers: [UsersController],
   providers: [
     CreateUserUseCase,

@@ -31,8 +31,6 @@ export class CreateUserUseCase {
       email: createUserDto.email,
       name: createUserDto.name,
       passwordHash,
-      createdAt: now,
-      updatedAt: now,
     });
     const saved = await this.userRepository.create(user);
     return saved;

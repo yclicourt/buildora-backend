@@ -28,7 +28,7 @@ model Auth {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   familyId  String
   tokenHash String
-  expiresAt DateTime? @default(now())
-  revokedAt DateTime  @default(now())
+  expiresAt DateTime 
+  revokedAt DateTime?  
   createdAt DateTime  @default(now())
 }

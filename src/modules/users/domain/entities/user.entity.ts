@@ -5,8 +5,6 @@ export interface UserProps {
   email: string;
   name: string;
   passwordHash: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export class User {
@@ -18,17 +16,12 @@ export class User {
 
   readonly passwordHash: string;
 
-  readonly createdAt: Date;
-
-  readonly updatedAt: Date;
 
   private constructor(props: UserProps) {
     this.id = props.id;
     this.email = props.email;
     this.name = props.name;
     this.passwordHash = props.passwordHash;
-    this.createdAt = props.createdAt;
-    this.updatedAt = props.updatedAt;
   }
 
   static create(props: UserProps): User {

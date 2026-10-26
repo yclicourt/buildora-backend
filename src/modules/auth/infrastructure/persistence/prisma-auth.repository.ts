@@ -11,13 +11,15 @@ export class PrismaAuthRepository implements RefreshTokenRepository {
   constructor(private readonly prisma: PrismaService) {}
   async save(record: RefreshTokenRecord): Promise<void> {
     await this.prisma.auth.create({
-      jti: record.jti,
-      userId: record.userId,
-      familyId: record.familyId,
-      tokenHash: record.tokenHash,
-      expiresAt: record.expiresAt,
-      revokedAt: record.revokedAt,
-      createdAt: record.createdAt,
+      data: {
+        jti: record.jti,
+        userId: record.userId,
+        familyId: record.familyId,
+        tokenHash: record.tokenHash,
+        expiresAt: record.expiresAt,
+        revokedAt: record.revokedAt ?? null,
+        createdAt: record.createdAt,
+      },
     });
   }
   async findByJti(jti: string): Promise<RefreshTokenRecord | null> {
@@ -27,11 +29,14 @@ export class PrismaAuthRepository implements RefreshTokenRepository {
   async revoke(jti: string): Promise<void> {
     await this.prisma.auth.update({
       where: { jti },
+      data: { revokedAt: new Date() },
     });
   }
   async revokeFamily(familyId: string): Promise<void> {
-    const row = await this.prisma.auth.findUnique({ where: { familyId } });
-    return row;
+    await this.prisma.auth.updateMany({
+      where: { familyId, revokedAt: null },
+      data: { revokedAt: new Date() },
+    });
   }
 
   private toRecord(row: AuthPayload): RefreshTokenRecord {

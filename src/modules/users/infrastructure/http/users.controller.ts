@@ -46,7 +46,6 @@ export class UsersController {
   @ApiOperation({ summary: 'List users' })
   async list(): Promise<UserResponse[]> {
     const users = await this.listUsers.execute();
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     return users.map(UserResponse.fromDomain);
   }
 
