@@ -1,0 +1,16 @@
+services:
+  db_buildera:
+    image: registry.local:5443/oficial-images/postgres:alpine
+    container_name: db-buildera
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - 5434:5432
+    volumes:
+      - vol_postgres:/var/lib/postgresql/data
+
+volumes:
+  vol_postgres:
