@@ -13,10 +13,22 @@ datasource db {
 }
 
 model User {
-  id        String   @default(uuid())
+  id        String   @id @default(uuid())
   email     String   @unique
   password  String
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  auth      Auth[]
+}
+
+model Auth {
+  jti       String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyId  String
+  tokenHash String
+  expiresAt DateTime? @default(now())
+  revokedAt DateTime  @default(now())
+  createdAt DateTime  @default(now())
 }
