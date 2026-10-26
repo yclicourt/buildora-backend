@@ -16,6 +16,7 @@ import { LoginUseCase } from '../../application/uses-cases/login.use-case';
 import { LogoutUseCase } from '../../application/uses-cases/logout.use-case';
 import { RefreshTokenUseCase } from '../../application/uses-cases/refresh-token.use-case';
 import { CurrentUser, type AuthenticatedUser } from './current-user.decorator';
+import { Public } from './public.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -28,6 +29,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
+  @Public()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Authenticate with email + password' })
   async loginHandler(@Body() dto: LoginDto): Promise<TokenPairResponse> {
@@ -36,6 +38,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @Public()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Exchange a refresh token for a new token pair (rotates)',
@@ -48,6 +51,7 @@ export class AuthController {
   }
 
   @Post('logout')
+  @Public()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Revoke a refresh token family (logout)' })
   async logoutHandler(@Body() dto: RefreshTokenDto): Promise<void> {

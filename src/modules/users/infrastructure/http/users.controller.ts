@@ -24,6 +24,7 @@ import {
   AuthenticatedUser,
   CurrentUser,
 } from '@/modules/auth/infrastructure/http/current-user.decorator';
+import { Public } from '@/modules/auth/infrastructure/http/public.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -36,6 +37,7 @@ export class UsersController {
   ) {}
 
   @Post()
+  @Public()
   @ApiOperation({ summary: 'Register a new user' })
   async create(@Body() dto: CreateUserDto): Promise<UserResponse> {
     const user = await this.createUser.execute(dto);
