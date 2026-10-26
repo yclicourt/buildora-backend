@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { SwaggerModule } from '@nestjs/swagger';
 import { config } from './shared/config/swagger.config';
 import { ValidationPipe } from '@nestjs/common';
+import { DomainExceptionFilter } from './shared/filters/domain-exception.filter';
 
 async function bootstrap() {
   const allowedOrigins = [
@@ -12,6 +13,7 @@ async function bootstrap() {
   ].filter(Boolean); // Filter out any undefined or empty strings
 
   const app = await NestFactory.create(AppModule);
+  app.useGlobalFilters(new DomainExceptionFilter());
   app.setGlobalPrefix('api/v1/');
   app.useGlobalPipes(
     new ValidationPipe({
